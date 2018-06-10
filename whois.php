@@ -287,8 +287,8 @@ class Whois{
 		//$domain = $explodedDomain[$explodedCount-2].".".$explodedDomain[$explodedCount-1];
 
 		if($explodedCount >= 3){
-			if(array_key_exists($explodedDomain[$explodedCount-1], $this->whoisServers)){
-				if(array_key_exists($explodedDomain[$explodedCount-2], $this->whoisServers)){
+			if(array_key_exists(strtolowr($explodedDomain[$explodedCount-1]), $this->whoisServers)){
+				if(array_key_exists(strtolowr($explodedDomain[$explodedCount-2]), $this->whoisServers)){
 					//$domain = $explodedDomain[$explodedCount-3].".".$explodedDomain[$explodedCount-2].".".$explodedDomain[$explodedCount-1];
 					$domainArr = array_slice($explodedDomain, -3);
 					$domain = implode(".", $domainArr);
@@ -334,7 +334,7 @@ class Whois{
 			return ["++[ERROR_NOT_A_DOMAIN]++"];
 		}
 
-		if (!array_key_exists($tld, $this->whoisServers)){
+		if (!array_key_exists(strtolower($tld), $this->whoisServers)){
 			return ["++[ERROR_UNSUPPORTED_TLD]++"];
 		}
 
@@ -358,7 +358,7 @@ class Whois{
 
 		$data = [];
 
-		while (!feof($f)){
+		while (!feof($f) && $f){
 			$data[] = rtrim(fgets($f), "\n");
 		}
 		
